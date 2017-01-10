@@ -14,12 +14,27 @@ public:
 		printf("CBase Constructor\n");
 	}
 
-	~CBase()
+	virtual ~CBase()
 	{
 		printf("CBase Distory\n");
 	}
 
 	int m_x;
+};
+
+
+class CChild : public CBase
+{
+public:
+	CChild():CBase()
+	{
+		printf("CChild Constructor\n");
+	}
+
+	virtual ~CChild()
+	{
+		printf("CChild Distory\n");
+	}
 };
 
 void testMem()
@@ -40,10 +55,20 @@ void testMem()
 void testnew()
 {
 	char* p = new char[100] ;
-	CBase* pbase = new CBase ;
+	CBase* pbase = new CChild ;
 
-	//delete[] p;
-	//delete pbase;
+
+	//operator delete[] (p, __FILE__, __LINE__);
+
+	//PoolDestroy(pbase);
+	//delete [] p;
+	SAFE_DELETE_GROUP(p);
+	SAFE_DELETE(pbase);
+
+//	operator delete (pbase, __FILE__, __LINE__);
+ 
+	//delete[] (p);
+	//delete  pbase ;
 	//FreePool (p);
 	//FreePool (pbase);
 
